@@ -23,7 +23,7 @@ does not include the Seq installer or executable/content files that will be embe
 
 ### Storage
 
-Data will be stored in the running container. This will not survive restarts. **Persistent volume mounts are not yet supported.**
+You can now mount Data and logs directories to your host computer to preserve data.
 
 ### Ports and protocols
 
@@ -35,5 +35,16 @@ To build the `seq-windows` image:
 
 ```shell
 cd ./seq-windows
-docker build -t seq-windows --build-arg SEQ_VERSION=4.1.17 .
+docker build -f dockerfile --build-arg SEQ_VERSION=5.1.3364 -t seq-win . 
+```
+
+To run your built image:
+
+```shell
+docker run --name seq -e ACCEPT_EULA=Y -v /path/to/seq/data:/C:/ProgramData/Seq/data - /path/to/seq/logs:C:/ProgramData/Seq/Logs -p 80:80 -p 5341:5341 seq-win:latest
+  ```
+
+eg:
+  ```shell
+docker run --name seq -e ACCEPT_EULA=Y -v H:/Docker/Seq/data:C:/ProgramData/Seq/data -v H:/Docker/Seq/logs:C:/ProgramData/Seq/Logs -p 80:80 -p 5341:5341 seq-win:latest
 ```
